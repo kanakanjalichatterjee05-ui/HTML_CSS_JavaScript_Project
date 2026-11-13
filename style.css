@@ -1,0 +1,256 @@
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --danger: #ef4444;
+  --border: #e2e8f0;
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --radius: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #090d16;
+    --surface: #111827;
+    --text: #f3f4f6;
+    --muted: #9ca3af;
+    --accent: #818cf8;
+    --accent-hover: #6366f1;
+    --danger: #f87171;
+    --border: #1f2937;
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+/* Screen-reader-only helper */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Card ---------- */
+.app {
+  width: 100%;
+  max-width: 480px;
+  padding: 36px 30px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease;
+}
+
+.app-header { 
+  margin-bottom: 28px; 
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.summary {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ---------- Form ---------- */
+.task-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.task-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 18px;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  transition: all 0.25s ease;
+}
+
+.task-form input::placeholder { color: var(--muted); }
+
+.task-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.btn-add {
+  padding: 14px 24px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-add:hover { 
+  background: var(--accent-hover); 
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+.btn-add:active { transform: translateY(1px); }
+
+/* ---------- Task list ---------- */
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom scrollbar for task list */
+.task-list::-webkit-scrollbar {
+  width: 6px;
+}
+.task-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.task-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* The task text is a button so it is keyboard-accessible */
+.task-text {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  transition: color 0.2s;
+}
+
+.task-item.completed {
+  background: var(--bg);
+  border-color: transparent;
+  opacity: 0.75;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.btn-delete {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Visible keyboard focus */
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  margin: 0;
+  padding: 36px 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  body { padding: 16px 12px; }
+  .app { padding: 24px 18px; }
+  h1 { font-size: 1.7rem; }
+}
